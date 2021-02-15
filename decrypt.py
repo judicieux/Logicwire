@@ -20,7 +20,7 @@ def decrypt(dir, key):
             with open(filename, "wb") as file:
                 file.write(decrypted_data)
 
-        subdirs = [os.path.join(dir, o) for o in os.listdir(dir) if os.path.isdir(os.path.join(dir, o))]
+        subdirs = [x[0] for x in os.walk(dir)]
         for dirdir in subdirs:
             for filename in glob.glob(os.path.join(dirdir, '*.*'), recursive=True):
                 with open(filename, "rb") as file:
