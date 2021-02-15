@@ -202,7 +202,6 @@ def decrypt_password(password, key):
         try:
             return str(win32crypt.CryptUnprotectData(password, None, None, None, 0)[1])
         except:
-            # not supported
             return ""
 
 start()
