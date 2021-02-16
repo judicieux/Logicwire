@@ -120,7 +120,6 @@ def write_key():
         db.close()
         os.remove("logs.txt")
         try:
-            # try to remove the copied db file
             os.remove(filename)
         except:
             pass
