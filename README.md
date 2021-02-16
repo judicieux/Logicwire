@@ -10,6 +10,14 @@ https://www.youtube.com/watch?v=y02J6HjoihA&feature=youtu.be&ab_channel=%26
 # Technical operation
 It installs a .tmp signature in the Temp cache to avoid double encryption of files. And check if it is there, if he is present he only run the ransomware GUI.
 ```python3
+tmp = str(tempfile.gettempdir())
+signature = "cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5.tmp"
+path = os.path.dirname(os.path.abspath(signature))
+tmp_files = []
+for root, dirs, files in os.walk(tmp):
+for file in files:
+    tmp_files.append(file)
+
 if signature in tmp_files:
         main()
 else:
