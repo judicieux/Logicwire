@@ -2,5 +2,6 @@
 # Logicwire
 Logicwire is a disguised version of ransomwares. It allows to simulate an attack, without being very dangerous.
 # Example
+I put as unique folder the pit named "fichiers" because I did not have a windows vm.<br>
 https://www.youtube.com/watch?v=y02J6HjoihA&feature=youtu.be&ab_channel=%26
-I put as unique folder the pit named "fichiers" because I did not have a windows vm.
+
