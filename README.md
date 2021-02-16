@@ -15,8 +15,8 @@ signature = "cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5.tmp"
 path = os.path.dirname(os.path.abspath(signature))
 tmp_files = []
 for root, dirs, files in os.walk(tmp):
-for file in files:
-    tmp_files.append(file)
+        for file in files:
+            tmp_files.append(file)
 
 if signature in tmp_files:
         main()
