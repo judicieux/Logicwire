@@ -11,7 +11,7 @@ https://www.youtube.com/watch?v=y02J6HjoihA&feature=youtu.be&ab_channel=%26
 <img src="https://cdn.discordapp.com/attachments/768928242467340328/811321319668056135/Action_16-02-2021_20-23-10_online-video-cutter.com.gif"><br>
 # Technical operation
 ### Avoid double encryption
-It installs a .tmp signature in the Temp cache to avoid double encryption of files. And check if it is there, if he is present he only run the ransomware GUI.
+It installs a .tmp signature (mutex) in the Temp cache to avoid double encryption of files. And check if it is there, if he is present he only run the ransomware GUI.
 ```python3
 tmp = str(tempfile.gettempdir())
 signature = "cea4b847-c3af-48c9-8260-fsf45zd5f2qzd5.tmp"
